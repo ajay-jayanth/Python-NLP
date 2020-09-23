@@ -6,10 +6,6 @@
 '''
 # C:\Users\msctb\AppData\Local\Programs\Python\Python38-32\Scripts
 
-'''
-rather than representing a text T in its feature space as {Word_i: count(Word_i, T) for Word_i in Vocabulary}, 
-you can represent it in a topic space as {Topic_i: Weight(Topic_i, T) for Topic_i in Topics}
-'''
 import pandas as pd
 import sklearn
 from sklearn.model_selection import train_test_split
@@ -19,7 +15,7 @@ from sklearn import metrics
 
 
 MainDf = pd.read_csv('Label-Sample200.csv')
-print(MainDf)
+#print(MainDf) [UNCOMMENT THIS WHEN DONE]
 '''
 Check for NaNs [FIXED]
 is_NaN = MainDf.isnull()
@@ -28,6 +24,27 @@ rows_with_NaN = MainDf[row_has_NaN]
 print(rows_with_NaN)
 '''
 
-X_train, X_test, Y_train, Y_test = train_test_split(MainDf[['text', 'Audience_category', 'Content_source']], MainDf['Content_category'], test_size = 0.3, random_state = 10)
-print(Y_train)
-print(Y_test)
+#Split data to training and testing data
+X_train, X_test, Y_train, Y_test = train_test_split(MainDf['text'], MainDf['Content_category'], test_size = 0.3, random_state = 10)
+#Vectorize training feature
+train_Vect = CountVectorizer()
+V_X_train = train_Vect.fit_transform(X_train)
+'''
+The Vectorizer takes the dataset if text values (i.e. training X values) and turns it into a matrix of token counts of the
+whole vocabulary or a limited vocabulary that can be set
+'''
+#Vectorize the testing feature
+test_Vect = CountVectorizer(vocabulary=train_Vect.vocabulary_)
+V_X_test = test_Vect.fit_transform(X_test)
+
+'''
+The model will be MultinomialNB, which is a scikit model that predicts from values tf-idf vectors using
+a Naive-Bayes Classifier
+'''
+model = MultinomialNB()
+model = model.fit(V_X_train, Y_train)
+
+#Predict the Y-Values from the model
+Y_Predicted = model.predict(V_X_test)
+print(Y_Predicted)
+print(Y_Predicted.shape)
