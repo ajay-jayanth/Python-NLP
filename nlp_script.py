@@ -1,8 +1,8 @@
-''' Author:      Ajay Jayanth
+''' 
+    Author:      Ajay Jayanth
     Date:        9/22/20
     Description: Naive Bayes Algroithm predicts the Content Category feature of text 
                  using a tf-idf vectorized set of text data
-
 '''
 # C:\Users\msctb\AppData\Local\Programs\Python\Python38-32\Scripts
 
