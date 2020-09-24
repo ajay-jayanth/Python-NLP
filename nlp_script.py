@@ -15,7 +15,7 @@ from sklearn import metrics
 
 
 MainDf = pd.read_csv('Label-Sample200.csv')
-#print(MainDf) [UNCOMMENT THIS WHEN DONE]
+#print(MainDf)
 '''
 Check for NaNs [FIXED]
 is_NaN = MainDf.isnull()
