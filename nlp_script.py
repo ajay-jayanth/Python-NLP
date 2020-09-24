@@ -46,5 +46,10 @@ model = model.fit(V_X_train, Y_train)
 
 #Predict the Y-Values from the model
 Y_Predicted = model.predict(V_X_test)
-print(Y_Predicted)
-print(Y_Predicted.shape)
+
+#Output the classification report and confusion matrix
+print("Training Size: %d" % X_train.shape[0])
+print("Test Size: %d" % X_test.shape[0])
+print(metrics.classification_report(Y_test, Y_Predicted, zero_division = 0)) #Because of small sample size of questions, the precision and f-score could be dividing by 0
+print("Confusion matrix: ")
+print(metrics.confusion_matrix(Y_test, Y_Predicted))
